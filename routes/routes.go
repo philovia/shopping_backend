@@ -4,7 +4,6 @@ import (
 	"github.com/gofiber/fiber/v2"
 
 	"github.com/mreym/go-fiber-postgres/controllers"
-
 )
 
 func UserRoutes(app *fiber.App) {

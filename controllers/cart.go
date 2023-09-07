@@ -4,7 +4,6 @@ import (
 	// "context"
 	"net/http"
 	"strconv"
-
 	// "time"
 	// "go-fiber-postgres/database"
 
@@ -12,6 +11,7 @@ import (
 	"gorm.io/gorm"
 
 	"github.com/mreym/go-fiber-postgres/models"
+
 )
 
 type Application struct {

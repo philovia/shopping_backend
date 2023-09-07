@@ -12,7 +12,8 @@ import (
 
 	"github.com/mreym/go-fiber-postgres/controllers"
 	"github.com/mreym/go-fiber-postgres/middleware"
-	"github.com/mreym/go-fiber-postgres/routes"
+	// "github.com/mreym/go-fiber-postgres/routes"
+
 )
 
 var DB *gorm.DB
@@ -49,7 +50,7 @@ func main() {
 
 	appController := controllers.NewApplication(DB)
 
-	routes.UserRoutes(app)
+	//  http://127.0.0.1:8080/api/addtocart
 	app.Use(middleware.Authentication())
 
 	api := app.Group("/api")

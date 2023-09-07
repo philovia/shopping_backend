@@ -11,7 +11,9 @@ import (
 	"github.com/joho/godotenv"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
+
 	// "github.com/mreym/go-fiber-postgres/models"
+
 )
 
 type NewUser struct {
@@ -173,7 +175,7 @@ func GenerateTokens(email string, firstname string, lastname string, uid uint) (
 		Email:      email,
 		First_Name: firstname,
 		Last_Name:  lastname,
-		Uid:        string(uid),
+		Uid:        string(rune(uid)),
 		StandardClaims: jwt.StandardClaims{
 			ExpiresAt: time.Now().Add(time.Hour * 24).Unix(),
 		},

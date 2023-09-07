@@ -9,9 +9,7 @@ import (
 	"github.com/joho/godotenv"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
-
 	// "github.com/mreym/go-fiber-postgres/"
-
 )
 
 var DB *gorm.DB
@@ -23,7 +21,8 @@ func LoadEnv() {
 	}
 }
 
-func SetupDatabase() { LoadEnv()
+func SetupDatabase() {
+	LoadEnv()
 	dsn := fmt.Sprintf("%s=localhost %s=5433 %s=shopping_end %s=postgres %s=postgres %s=disable",
 		os.Getenv("DB_HOST"),
 		os.Getenv("DB_PORT"),

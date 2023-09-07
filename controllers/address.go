@@ -9,6 +9,7 @@ import (
 	_ "github.com/jinzhu/gorm/dialects/postgres"
 
 	"github.com/mreym/go-fiber-postgres/models"
+
 )
 
 var app = fiber.New()
