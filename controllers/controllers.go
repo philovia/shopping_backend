@@ -8,8 +8,9 @@ import (
 
 	"github.com/go-playground/validator/v10"
 	"github.com/gofiber/fiber/v2"
-	"github.com/gofiber/fiber/v2/middleware/recover"
-	"github.com/joho/godotenv"
+
+	// "github.com/gofiber/fiber/v2/middleware/recover"
+	// "github.com/joho/godotenv"
 	"golang.org/x/crypto/bcrypt"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -17,6 +18,7 @@ import (
 
 	// "github.com/mreym/go-fiber-postgres/middleware"
 	"github.com/mreym/go-fiber-postgres/models"
+	"github.com/mreym/go-fiber-postgres/storage"
 	"github.com/mreym/go-fiber-postgres/tokens"
 )
 
@@ -134,14 +136,14 @@ func Login(c *fiber.Ctx) error {
 		return nil
 	}
 
-	token, refreshToken, _ := tokens.GenerateTokens(foundUser.Email, foundUser.First_Name, foundUser.Last_Name, uint(foundUser.User_ID))
+	// token, refreshToken, _ := tokens.GenerateTokens(foundUser.Email, foundUser.First_Name, foundUser.Last_Name, uint(foundUser.User_ID))
 
 	// err = tokens.UpdateAllTokens(token, refreshToken, foundUser.User_ID)
-	tokErr := tokens.UpdateAllTokens()
-	if tokErr != nil {
-		c.Status(http.StatusInternalServerError).JSON(fiber.Map{"error": "failed to update tokens"})
-		return err
-	}
+	// // tokErr := tokens.UpdateAllTokens()
+	// if err != nil {
+	// 	c.Status(http.StatusInternalServerError).JSON(fiber.Map{"error": "failed to update tokens"})
+	// 	return err
+	// }
 
 	c.Status(http.StatusFound).JSON(foundUser)
 	return nil
@@ -202,7 +204,7 @@ func SearchProductByQuery(c *fiber.Ctx) error {
 
 // Example handler to get user data
 func GetUserHandler(c *fiber.Ctx) error {
-	userData := database.UserData("users")
+	userData := storage.UserData("users")
 	var users []models.Users
 	userData.Find(&users)
 
@@ -212,7 +214,7 @@ func GetUserHandler(c *fiber.Ctx) error {
 
 // Example handler to get product data
 func GetProductHandler(c *fiber.Ctx) error {
-	productData := database.ProductData("products")
+	productData := storage.ProductData("products")
 	var products []models.Product
 	productData.Find(&products)
 
@@ -220,25 +222,25 @@ func GetProductHandler(c *fiber.Ctx) error {
 	return c.JSON(products)
 }
 
-func main() {
+// func main() {
 
-	err := godotenv.Load(".env")
-	if err != nil {
-		log.Fatal(err)
-	}
-	SetupDatabase()
+// 	err := godotenv.Load(".env")
+// 	if err != nil {
+// 		log.Fatal(err)
+// 	}
+// 	SetupDatabase()
 
-	app := fiber.New()
+// 	app := fiber.New()
 
-	app.Use(recover.New())
+// 	app.Use(recover.New())
 
-	app.Post("/signup", Signup)
-	app.Post("/login", Login)
-	app.Get("/search", SearchProductByQuery)
-	app.Post("/admin/products", ProductViewerAdmin)
+// 	app.Post("/signup", Signup)
+// 	app.Post("/login", Login)
+// 	app.Get("/search", SearchProductByQuery)
+// 	app.Post("/admin/products", ProductViewerAdmin)
 
-	err = app.Listen(":8080")
-	if err != nil {
-		log.Fatal(err)
-	}
-}
+// 	err = app.Listen(":8080")
+// 	if err != nil {
+// 		log.Fatal(err)
+// 	}
+// }
