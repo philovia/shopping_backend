@@ -5,9 +5,9 @@ import (
 
 	"github.com/gofiber/fiber/v2"
 
+	"github.com/mreym/go-fiber-postgres/tokens"
 	// "github.com/mreym/go-fiber-postgres/tokens"
 	// "github.com/mreym/go-fiber-postgres/tokens"
-
 )
 
 func Authentication() fiber.Handler {
@@ -17,13 +17,13 @@ func Authentication() fiber.Handler {
 			return c.Status(http.StatusUnauthorized).JSON(fiber.Map{"error": "No authorization header provided"})
 		}
 
-		// claims, msg := tokens.ValidateToken(ClientToken)
-		// if msg != "" {
-		// 	return c.Status(http.StatusUnauthorized).JSON(fiber.Map{"error": msg})
-		// }
+		claims, msg := tokens.ValidateToken(ClientToken)
+		if msg != "" {
+			return c.Status(http.StatusUnauthorized).JSON(fiber.Map{"error": msg})
+		}
 
-		// c.Locals("emails", claims.Email)
-		// c.Locals("uid", claims.Uid)
+		c.Locals("emails", claims.Email)
+		c.Locals("uid", claims.Uid)
 		return c.Next()
 	}
 }

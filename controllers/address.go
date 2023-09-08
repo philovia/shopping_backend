@@ -80,7 +80,7 @@ func EditAddress(c *fiber.Ctx) error {
 		if address_id == address_id {
 			user.Address_Details[i] = editAddress
 		}
-	}
+	}	
 
 	if err := db.Save(&user).Error; err != nil {
 		return c.Status(http.StatusInternalServerError).JSON(fiber.Map{"error": "Internal server error"})
